@@ -1,7 +1,7 @@
 <?php
 require 'nusoap/lib/nusoap.php';
 
-$client = new nusoap_client("http://localhost:8080/IT140P/service.php?wsdl"); // Create a instance for nusoap client
+$client = new nusoap_client("http://localhost/it140p-labexer3/IT140P/service.php?wsdl"); // Create a instance for nusoap client
 
 ?>
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ $client = new nusoap_client("http://localhost:8080/IT140P/service.php?wsdl"); //
 	{
 		$name =  $_POST['name'];
                 $code =  $_POST['code'];
-		
+
 		$response = $client->call('get_count',array("name"=>$name,"code"=>$code));
 
 		if(empty($response))
