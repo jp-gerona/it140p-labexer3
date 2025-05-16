@@ -1,0 +1,10 @@
+# composer
+composer.phar
+/vendor/
+
+# environment variables
+.env
+.env.production
+
+# MacOS
+.DS_Store

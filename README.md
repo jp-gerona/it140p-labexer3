@@ -10,6 +10,10 @@ Using Nusoap Library create an application that will respond the courses taken b
 
 ![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
 
+**Libraries**
+
+- NuSOAP
+
 </div>
 
 ## Structure
@@ -23,7 +27,7 @@ Using Nusoap Library create an application that will respond the courses taken b
 │   ├── backend/
 │   │   ├── nusoap/
 │   │   │   ├── lib/
-│   │   ├── database.php
+│   │   ├── data.php
 │   │   ├── service.php
 ```
 

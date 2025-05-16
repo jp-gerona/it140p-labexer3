@@ -1,4 +1,0 @@
-<?php
-
-$student_record = [];
-?>
