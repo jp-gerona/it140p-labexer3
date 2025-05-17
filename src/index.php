@@ -1,14 +1,15 @@
 <?php
 require "backend/nusoap/lib/nusoap.php";
-
-$client = new nusoap_client("http://localhost/it140p-labexer3/src/backend/service.php?wsdl");
+$client = new nusoap_client("http://localhost/it140p-labexer3/src/backend/service.php?wsdl", true);
 
 $response = null;
+$responseXml = null;
+
 if (isset($_POST['submit'])) {
     $studentName = $_POST['studentName'];
-    $client = new nusoap_client("http://localhost/it140p-labexer3/src/backend/service.php?wsdl", true);
     $response = $client->call("GetStudentCourses", ["studentName" => $studentName]);
-    $response = json_decode($response, true);
+
+    $responseXml = simplexml_load_string($response);
 }
 //tip: You can write php code inside html tags
 //todo: user input that accepts student's full name and student number
@@ -22,7 +23,7 @@ if (isset($_POST['submit'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MMCL Student Portal</title>
+  <title>Student Portal</title>
   <meta name="description" content="Student Portal for MMCL College Students for the third semester of school year 2024-2025.">
 </head>
 <body>
@@ -34,26 +35,31 @@ if (isset($_POST['submit'])) {
       <button type="submit" name="submit">Submit</button>
     </form>
 
-    <?php if ($response): ?>
-      <?php if ($response['status'] === 'success'): ?>
+    <?php if ($responseXml): ?>
+      <?php if ($responseXml->status == 'success'): ?>
         <h2>Student Information</h2>
-        <p><strong>Name:</strong> <?= htmlspecialchars($studentName) ?></p>
-        <p><strong>Student Number:</strong> <?= htmlspecialchars($response['studentInfo']['Student Number']) ?></p>
-        <p><strong>Year Level:</strong> <?= htmlspecialchars($response['studentInfo']['Year Level']) ?></p>
-        <p><strong>Program:</strong> <?= htmlspecialchars($response['studentInfo']['Program']) ?></p>
+        <p><strong>Name:</strong> <?= htmlspecialchars($responseXml->studentInfo->StudentName) ?></p>
+        <p><strong>Student Number:</strong> <?= htmlspecialchars($responseXml->studentInfo->StudentNumber) ?></p>
+        <p><strong>Year Level:</strong> <?= htmlspecialchars($responseXml->studentInfo->YearLevel) ?></p>
+        <p><strong>Program:</strong> <?= htmlspecialchars($responseXml->studentInfo->Program) ?></p>
 
         <h2>Courses Taken</h2>
-        <?php foreach ($response['studentCourses'] as $courseCode => $courseInfo): ?>
-          <p><strong>Course Code:</strong> <?= htmlspecialchars($courseCode) ?></p>
-          <p><strong>Course Title:</strong> <?= htmlspecialchars($courseInfo['Course Title']) ?></p>
-          <p><strong>Lecture Hours:</strong> <?= htmlspecialchars($courseInfo['Lecture Hours']) ?></p>
-          <p><strong>Laboratory Hours:</strong> <?= htmlspecialchars($courseInfo['Laboratory Hours']) ?></p>
-          <p><strong>Credit Units:</strong> <?= htmlspecialchars($courseInfo['Credit Units']) ?></p>
+        <?php foreach ($responseXml->studentCourses->course as $course): ?>
+          <p><strong>Course Code:</strong> <?= htmlspecialchars($course->CourseCode) ?></p>
+          <p><strong>Course Title:</strong> <?= htmlspecialchars($course->CourseTitle) ?></p>
+          <p><strong>Lecture Hours:</strong> <?= htmlspecialchars($course->LectureHours) ?></p>
+          <p><strong>Laboratory Hours:</strong> <?= htmlspecialchars($course->LaboratoryHours) ?></p>
+          <p><strong>Credit Units:</strong> <?= htmlspecialchars($course->CreditUnits) ?></p>
           <hr>
         <?php endforeach; ?>
       <?php else: ?>
-        <p style="color: red;"><?= htmlspecialchars($response['message']) ?></p>
+        <p style="color: red;"><?= htmlspecialchars($responseXml->message) ?></p>
       <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if ($response): ?>
+      <h2>Raw XML Payload</h2>
+      <pre><?= htmlspecialchars($response) ?></pre>
     <?php endif; ?>
   </main>
 </body>

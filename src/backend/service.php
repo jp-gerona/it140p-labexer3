@@ -16,5 +16,14 @@ $server->register(
     "Fetches student information and courses based on the student name."
 );
 
+// The request will look like this:
+// <SOAP-ENV:Envelope>
+//   <SOAP-ENV:Body>
+//     <tns:GetStudentCourses>
+//       <studentName xsi:type="xsd:string">Julian Peter Gerona</studentName>
+//     </tns:GetStudentCourses>
+//   </SOAP-ENV:Body>
+// </SOAP-ENV:Envelope>
+
 $server->service(file_get_contents("php://input"));
 ?>

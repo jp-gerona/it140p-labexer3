@@ -14,7 +14,6 @@ function GetStudentCourses($studentName) {
             "Credit Units" => 3,
         ],
     ];
-
     $studentRecord = [
         "Julian Peter Gerona" => [
             "Student Number" => "2022153329",
@@ -26,50 +25,32 @@ function GetStudentCourses($studentName) {
 
     if (array_key_exists($studentName, $studentRecord)) {
         $studentInfo = $studentRecord[$studentName];
-        $studentCourses = [];
+        $xml = new SimpleXMLElement('<response/>');
+        $xml->addChild('status', 'success');
+
+        $studentInfoXml = $xml->addChild('studentInfo');
+        $studentInfoXml->addChild('StudentName', $studentName);
+        $studentInfoXml->addChild('StudentNumber', $studentInfo['Student Number']);
+        $studentInfoXml->addChild('YearLevel', $studentInfo['Year Level']);
+        $studentInfoXml->addChild('Program', $studentInfo['Program']);
+
+        $coursesXml = $xml->addChild('studentCourses');
         foreach ($studentInfo["Courses Taken"] as $courseCode) {
-            $studentCourses[$courseCode] = $courses[$courseCode];
+            $courseXml = $coursesXml->addChild('course');
+            $courseXml->addChild('CourseCode', $courseCode);
+            $courseXml->addChild('CourseTitle', $courses[$courseCode]['Course Title']);
+            $courseXml->addChild('LectureHours', $courses[$courseCode]['Lecture Hours']);
+            $courseXml->addChild('LaboratoryHours', $courses[$courseCode]['Laboratory Hours']);
+            $courseXml->addChild('CreditUnits', $courses[$courseCode]['Credit Units']);
         }
-        return json_encode([
-            "status" => "success",
-            "studentInfo" => $studentInfo,
-            "studentCourses" => $studentCourses,
-        ]);
+
+        return $xml->asXML();
     } else {
-        return json_encode([
-            "status" => "error",
-            "message" => "Record not found for: $studentName",
-        ]);
+        $xml = new SimpleXMLElement('<response/>');
+        $xml->addChild('status', 'error');
+        $xml->addChild('message', "Record not found for: $studentName");
+        return $xml->asXML();
     }
-
-    // if (array_key_exists($studentName, $studentRecord)) {
-    //     $studentInfo = $studentRecord[$studentName];
-    //     $xml = new SimpleXMLElement('<response/>');
-    //     $xml->addChild('status', 'success');
-
-    //     $studentInfoXml = $xml->addChild('studentInfo');
-    //     $studentInfoXml->addChild('StudentName', $studentName);
-    //     $studentInfoXml->addChild('StudentNumber', $studentInfo['Student Number']);
-    //     $studentInfoXml->addChild('YearLevel', $studentInfo['Year Level']);
-    //     $studentInfoXml->addChild('Program', $studentInfo['Program']);
-
-    //     $coursesXml = $xml->addChild('studentCourses');
-    //     foreach ($studentInfo["Courses Taken"] as $courseCode) {
-    //         $courseXml = $coursesXml->addChild('course');
-    //         $courseXml->addChild('CourseCode', $courseCode);
-    //         $courseXml->addChild('CourseTitle', $courses[$courseCode]['Course Title']);
-    //         $courseXml->addChild('LectureHours', $courses[$courseCode]['Lecture Hours']);
-    //         $courseXml->addChild('LaboratoryHours', $courses[$courseCode]['Laboratory Hours']);
-    //         $courseXml->addChild('CreditUnits', $courses[$courseCode]['Credit Units']);
-    //     }
-
-    //     return $xml->asXML();
-    // } else {
-    //     $xml = new SimpleXMLElement('<response/>');
-    //     $xml->addChild('status', 'error');
-    //     $xml->addChild('message', "Record not found for: $studentName");
-    //     return $xml->asXML();
-    // }
 
     // If the request is successful and the record for the student name exists in $studentRecord,
     // the XML response will look like this:
