@@ -6,9 +6,16 @@
 actor: AcceptanceTester
 modules:
     enabled:
-        - PhpBrowser:
+        - WebDriver:
             url: http://localhost/it140p-labexer3/src
-        - \Helper\Acceptance
+            browser: firefox
+            host: 127.0.0.1
+            port: 4444
+            restart: true
+            window_size: maximize
+        # For PhpBrowser testing, uncomment the following lines and comment out the WebDriver lines.
+        # - PhpBrowser:
+        #     url: http://localhost/it140p-labexer3/src
 # Add Codeception\Step\Retry trait to AcceptanceTester to enable retries
 step_decorators:
     - Codeception\Step\ConditionalAssertion
