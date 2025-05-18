@@ -25,8 +25,7 @@ if (isset($_POST['submit'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Portal</title>
   <meta name="description" content="Student Portal for MMCL College Students for the third semester of school year 2024-2025.">
-  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body>
   <main>
@@ -64,6 +63,6 @@ if (isset($_POST['submit'])) {
       <pre><?= htmlspecialchars($response) ?></pre>
     <?php endif; ?>
   </main>
-  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
