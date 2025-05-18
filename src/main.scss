@@ -1,0 +1,18 @@
+// Theme
+$primary: #ed1c24;
+$secondary: #001c43;
+
+// Import Bootstrap Sass
+@import "../vendor/twbs/bootstrap/scss/bootstrap";
+
+.btn-primary {
+  background-color: $primary;
+  color: #fff;
+  border-color: $primary;
+
+  &:hover {
+    background-color: darken($primary, 10%);
+    border-color: darken($primary, 10%);
+    color: #fff;
+  }
+}

@@ -14,7 +14,7 @@ final class CoursePortalCest
         // Code here will be executed before each test.
     }
 
-    public function tryToTest(AcceptanceTester $I): void
+    public function GetCoursesSuccess(AcceptanceTester $I): void
     {
         // Write your tests here. All `public` methods will be executed as tests.
         $I->wantTo('Submit a student name and view their courses');
@@ -33,5 +33,17 @@ final class CoursePortalCest
         $I->see('Application Development and Emerging Technologies');
         $I->see('IT145');
         $I->see('System Integration and Architectures');
+    }
+
+    public function GetCoursesFailure(AcceptanceTester $I): void
+    {
+        $I->wantTo('Submit a student name that does not exist');
+
+        $I->amOnPage('/index.php');
+
+        $I->fillField('studentName', 'Belen Ladesma');
+        $I->click('Submit');
+
+        $I->see('Record not found for: Belen Ladesma');
     }
 }
