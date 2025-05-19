@@ -81,3 +81,9 @@ java -jar /usr/local/bin/selenium-server-standalone-3.141.59.jar
 ```bash
 vendor/bin/codecept run Acceptance --steps
 ```
+
+## Thoughts
+
+Starting this project was a bit of a struggle, I was very unfamiliar with PHP and it took time for me to understand how the sample SOAP project works. At first, I explored and backtracked a lot, trying to see if the stack that I am familiar with works. I tried to transform this project as a Laravel project and learn PHP from there but quickly learned that the Laravel framework was too complex for this use case. I checked out Tailwind CSS, but learned that it is incompatible with Bootstrap. I tried searching for other UI Libraries (A headless UI library specifically) and was shocked to see how there is only a few agnostic UI libraries, where most are framework-dependent like React.
+
+Development rapidly starts picking up after familiarizing myself with the docs for each stack. I got comfortable with PHP as I find it similar to React, where dynamic content are enclosed with `<?php` tags like how React uses `{}`. I tried using Composer for managing dependencies for the project to keep it "PHP-friendly". Regarding the backend or the SOAP application, my first approach was to use JSON encode and decode, but doubted it as unconventional and inefficient for creating SOAP. Then, I learned about the PHP extension called `simpleXMLElement` which saved the day. I also found reading the Bootstrap docs quite enjoyable while making the UI for the exercise. Finally, I explored how testing works in real development and made automated acceptance test cases using a WebDriver.
