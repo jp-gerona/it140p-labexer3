@@ -13,10 +13,46 @@ function GetStudentCourses($studentName) {
             "Laboratory Hours" => 0,
             "Credit Units" => 3,
         ],
+        "CS198L" => [
+            "Course Title" => "Comprehensive Examination Module",
+            "Lecture Hours" => 0,
+            "Laboratory Hours" => 3.75,
+            "Credit Units" => 1,
+        ],
+        "IT190-2P" => [
+            "Course Title" => "Networks and Security (Paired)",
+            "Lecture Hours" => 2.5,
+            "Laboratory Hours" => 3.75,
+            "Credit Units" => 2,
+        ],
+        "IT190-3P" => [
+            "Course Title" => "Virtualization and Cloud Security (Paired)",
+            "Lecture Hours" => 2.5,
+            "Laboratory Hours" => 3.75,
+            "Credit Units" => 2,
+        ],
     ];
     $studentRecord = [
         "Julian Peter Gerona" => [
             "Student Number" => "2022153329",
+            "Year Level" => 3,
+            "Program" => "Bachelor of Science in Information Technology",
+            "Courses Taken" => ["IT140P", "IT145", "CS198L", "IT190-2P", "IT190-3P"],
+        ],
+        "Luis Gerard Tiongco" => [
+            "Student Number" => "2022152009",
+            "Year Level" => 3,
+            "Program" => "Bachelor of Science in Information Technology",
+            "Courses Taken" => ["IT140P", "IT145", "CS198L"],
+        ],
+        "Carl Francis Alcantara" => [
+            "Student Number" => "2022153255",
+            "Year Level" => 3,
+            "Program" => "Bachelor of Science in Information Technology",
+            "Courses Taken" => ["IT140P", "IT190-2P", "IT190-3P"],
+        ],
+        "Christian Kerby Salandanan" => [
+            "Student Number" => "2022153519",
             "Year Level" => 3,
             "Program" => "Bachelor of Science in Information Technology",
             "Courses Taken" => ["IT140P", "IT145"],
@@ -48,7 +84,7 @@ function GetStudentCourses($studentName) {
     } else {
         $xml = new SimpleXMLElement('<response/>');
         $xml->addChild('status', 'error');
-        $xml->addChild('message', "Record not found for: $studentName");
+        $xml->addChild('message', "No courses were found for $studentName");
         return $xml->asXML();
     }
 
