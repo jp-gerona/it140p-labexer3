@@ -10156,7 +10156,7 @@ textarea.form-control-lg {
   color: #fff;
   border-color: #ed1c24;
 }
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
   background-color: #c61017;
   border-color: #c61017;
   color: #fff;

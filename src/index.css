@@ -1,13 +1,9 @@
-section {
-  position: relative;
-  height: 91vh;
-}
-
 .search-background {
   position: relative;
   background-image: url("assets/mmcl-background.jpg");
   background-size: cover;
-  background-position: center 25%;
+  background-position: center 15%;
+  height: 84vh;
 }
 
 .gradient-background {
@@ -20,8 +16,8 @@ section {
   width: 100%;
   background: radial-gradient(
     125% 125% at 50% 10%,
-    rgba(255, 255, 255, 0.55) 40%,
-    #fff 70%
+    rgba(255, 255, 255, 0.6) 40%,
+    #fff 67%
   );
 }
 

@@ -10,7 +10,7 @@ $secondary: #001c43;
   color: #fff;
   border-color: $primary;
 
-  &:hover {
+  &:hover, &:focus, &:active {
     background-color: darken($primary, 10%);
     border-color: darken($primary, 10%);
     color: #fff;
