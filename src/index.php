@@ -6,7 +6,7 @@ $response = null;
 $responseXml = null;
 
 if (isset($_POST['submit'])) {
-    $studentName = $_POST['studentName'];
+    $studentName = ucwords(strtolower($_POST['studentName']));
     $response = $client->call("GetStudentCourses", ["studentName" => $studentName]);
 
     $responseXml = simplexml_load_string($response);
@@ -37,11 +37,13 @@ function prettyPrintXml($xml) {
   <link rel="preload" href="assets/mmcl-background.jpg" as="image">
 </head>
 <body>
+  <!-- Header -->
   <header class="d-flex flex-wrap justify-content-center py-3 px-3 border-bottom sticky-top bg-white shadow" id="school-header">
     <a href="#" class="d-flex align-items-center me-md-auto">
       <image src="assets/mmcl-logo-horizontal.webp" alt="MMCL Logo" class="img-fluid" width="120">
     </a>
   </header>
+
   <main>
     <!-- Search Student & Courses Section -->
     <section class="d-flex justify-content-center align-items-center p-5 text-center fluid-container search-background">
@@ -51,7 +53,7 @@ function prettyPrintXml($xml) {
           <h1 class="fw-bold text-primary">STUDENT COURSE PORTAL<span class="d-block text-secondary">3T 2024-2025<span></h1>
           <p class="fw-normal lead text-black mb-5">Forgot your courses? Don't worry! Simply search for your full name to quickly view the list of courses you have enrolled for the third semester of S.Y. 2024-2025.</p>
           <form action="" method="POST" class="container">
-            <div class="input-group">
+            <div class="input-group shadow-lg">
               <input type="text" id="studentName" name="studentName" class="form-control" placeholder="Juan dela Cruz" required>
               <button type="submit" name="submit" class="btn btn-primary" id="basic-addon2">Get courses</button>
             </div>
@@ -69,14 +71,14 @@ function prettyPrintXml($xml) {
             Success! Student records successfully retrieved for&nbsp;<strong><?= htmlspecialchars($responseXml->studentInfo->StudentName) ?></strong>.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-          <h2>Student Information</h2>
-          <div>
+          <h2 class="text-secondary">Student Information</h2>
+          <div class="card p-3 shadow mb-4">
               <p><strong>Name:</strong> <?= htmlspecialchars($responseXml->studentInfo->StudentName) ?></p>
               <p><strong>Student Number:</strong> <?= htmlspecialchars($responseXml->studentInfo->StudentNumber) ?></p>
               <p><strong>Year Level:</strong> <?= htmlspecialchars($responseXml->studentInfo->YearLevel) ?></p>
               <p><strong>Program:</strong> <?= htmlspecialchars($responseXml->studentInfo->Program) ?></p>
           </div>
-          <h2>Courses Taken</h2>
+          <h2 class="text-secondary">Courses Taken</h2>
           <?php if (count($responseXml->studentCourses->course) > 0): ?>
             <div class="table-responsive shadow">
               <table class="table table-bordered table-striped align-middle">
@@ -122,7 +124,7 @@ function prettyPrintXml($xml) {
     <!-- Raw XML Response Section -->
     <section class="container mt-4 mb-5">
       <?php if ($response): ?>
-        <h2>XML Response</h2>
+        <h2 class="text-secondary">SOAP Response</h2>
         <div class="card">
           <div class="card-header font-monospace d-flex justify-content-between align-items-center">
             XML
@@ -136,10 +138,30 @@ function prettyPrintXml($xml) {
         </div>
       <?php endif; ?>
     </section>
+
+    <!-- Back to Top -->
+    <div class="container text-center mb-5">
+      <a href="#school-header" class="btn btn-primary btn-sm shadow" id="back-to-top">
+        <i class="bi bi-arrow-up"></i>
+        Back to Top
+      </a>
+    </div>
   </main>
   <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-xml.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const backToTopButton = document.getElementById('back-to-top');
+      backToTopButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
 </body>
 </html>
 
