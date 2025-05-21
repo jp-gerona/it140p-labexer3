@@ -26,13 +26,15 @@ function prettyPrintXml($xml) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Course Portal</title>
+  <title>MMCL Student Course Portal 3T 2024-2025</title>
   <meta name="description" content="Student Portal for MMCL College Students for the third semester of school year 2024-2025.">
   <link rel="stylesheet" href="../vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="../vendor/twbs/bootstrap-icons/font/bootstrap-icons.css">
   <link rel="stylesheet" href="main.css">
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
+  <link rel="icon" href="assets/mmcl-crest.png" type="image/x-icon">
+  <link rel="preload" href="assets/mmcl-background.jpg" as="image">
 </head>
 <body>
   <header class="d-flex flex-wrap justify-content-center py-3 px-3 border-bottom sticky-top bg-white shadow" id="school-header">
@@ -58,13 +60,14 @@ function prettyPrintXml($xml) {
       </div>
     </section>
 
-    <!-- Get Student & Courses Section -->
+    <!-- Get Student Records Section -->
     <section class="container mt-4" id="student-courses">
       <?php if ($responseXml): ?>
         <?php if ($responseXml->status == 'success'): ?>
-          <div class="alert alert-success d-flex align-items-center" role="alert">
+          <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
             <i class="bi bi-check-circle-fill flex-shrink-0 me-2"></i>
-            Success! Student courses retrieved for&nbsp;<strong><?= htmlspecialchars($responseXml->studentInfo->StudentName) ?></strong>&nbsp;successfully.
+            Success! Student records successfully retrieved for&nbsp;<strong><?= htmlspecialchars($responseXml->studentInfo->StudentName) ?></strong>.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
           <h2>Student Information</h2>
           <div>
@@ -74,35 +77,43 @@ function prettyPrintXml($xml) {
               <p><strong>Program:</strong> <?= htmlspecialchars($responseXml->studentInfo->Program) ?></p>
           </div>
           <h2>Courses Taken</h2>
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle">
-              <thead class="table-secondary">
-                <tr>
-                  <th>Course Code</th>
-                  <th>Course Title</th>
-                  <th>Lecture Hours</th>
-                  <th>Laboratory Hours</th>
-                  <th>Credit Units</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($responseXml->studentCourses->course as $course): ?>
+          <?php if (count($responseXml->studentCourses->course) > 0): ?>
+            <div class="table-responsive shadow">
+              <table class="table table-bordered table-striped align-middle">
+                <thead class="table-secondary">
                   <tr>
-                    <td><?= htmlspecialchars($course->CourseCode) ?></td>
-                    <td><?= htmlspecialchars($course->CourseTitle) ?></td>
-                    <td><?= htmlspecialchars($course->LectureHours) ?></td>
-                    <td><?= htmlspecialchars($course->LaboratoryHours) ?></td>
-                    <td><?= htmlspecialchars($course->CreditUnits) ?></td>
+                    <th>Course Code</th>
+                    <th>Course Title</th>
+                    <th>Lecture Hours</th>
+                    <th>Laboratory Hours</th>
+                    <th>Credit Units</th>
                   </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  <?php foreach ($responseXml->studentCourses->course as $course): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($course->CourseCode) ?></td>
+                      <td><?= htmlspecialchars($course->CourseTitle) ?></td>
+                      <td><?= htmlspecialchars($course->LectureHours) ?></td>
+                      <td><?= htmlspecialchars($course->LaboratoryHours) ?></td>
+                      <td><?= htmlspecialchars($course->CreditUnits) ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          <?php else: ?>
+            <div class="card text-center p-5 shadow">
+              <i class="bi bi-emoji-frown display-4 text-muted mb-3"></i>
+              <p class="lead mb-0">It seems that there are no 3T courses enrolled for this student.</p>
+            </div>
+          <?php endif; ?>
         <?php else: ?>
-          <div class="alert alert-danger d-flex align-items-center" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
             <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"></i>
             Oops!&nbsp;<strong><?= htmlspecialchars($responseXml->message) ?></strong>.
             Make sure to check your spelling and try again.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         <?php endif; ?>
       <?php endif; ?>
@@ -117,7 +128,7 @@ function prettyPrintXml($xml) {
             XML
             <small>Powered by NuSOAP v.0.9.5</small>
           </div>
-          <div class="card-body">
+          <div class="card-body shadow">
             <small>
               <pre class="language-xml bg-white"><code><?= htmlspecialchars(prettyPrintXml($response)) ?></code></pre>
             </small>

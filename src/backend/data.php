@@ -55,7 +55,7 @@ function GetStudentCourses($studentName) {
             "Student Number" => "2022153519",
             "Year Level" => 3,
             "Program" => "Bachelor of Science in Information Technology",
-            "Courses Taken" => ["IT140P", "IT145"],
+            "Courses Taken" => [],
         ],
     ];
 
