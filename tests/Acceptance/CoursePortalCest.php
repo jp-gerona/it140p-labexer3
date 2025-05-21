@@ -43,10 +43,10 @@ final class CoursePortalCest
 
     public function GetCoursesAnotherSuccess(AcceptanceTester $I): void
     {
-        $I->wantTo('Submit a student name and view their courses');
+        $I->wantTo('Submit a student name in random case and view their courses');
 
         $I->amOnPage('/index.php');
-        $I->fillField('studentName', 'Luis Gerard Tiongco');
+        $I->fillField('studentName', 'lUiS gerard TiOngCo');
         $I->wait(2);
         $I->click('Get courses');
 
