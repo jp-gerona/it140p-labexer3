@@ -55,7 +55,10 @@ function prettyPrintXml($xml) {
           <form action="" method="POST" class="container">
             <div class="input-group shadow-lg">
               <input type="text" id="studentName" name="studentName" class="form-control" placeholder="Juan dela Cruz" required>
-              <button type="submit" name="submit" class="btn btn-primary" id="basic-addon2">Get courses</button>
+              <button type="submit" name="submit" class="btn btn-primary" id="basic-addon2">
+                <span class="d-none d-md-inline">Get Courses</span>
+                <span class="d-inline d-md-none"><i class="bi bi-search"></i></span>
+              </button>
             </div>
           </form>
         </div>
@@ -136,16 +139,15 @@ function prettyPrintXml($xml) {
             </small>
           </div>
         </div>
+        <!-- Back to Top -->
+        <div class="container text-center mt-4 mb-5">
+          <a href="#school-header" class="btn btn-primary btn-sm shadow" id="back-to-top">
+            <i class="bi bi-arrow-up"></i>
+            Back to Top
+          </a>
+        </div>
       <?php endif; ?>
     </section>
-
-    <!-- Back to Top -->
-    <div class="container text-center mb-5">
-      <a href="#school-header" class="btn btn-primary btn-sm shadow" id="back-to-top">
-        <i class="bi bi-arrow-up"></i>
-        Back to Top
-      </a>
-    </div>
   </main>
   <script src="../vendor/twbs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
